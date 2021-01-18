@@ -6,17 +6,14 @@ class World:
         assert len(size) == 2
         self.size = size
 
-        self.biomes = np.array(self.size, dtype=np.uint8)
+        self.biomes = np.array(self.size, dtype=np.int8)
         self.biome_debris = np.array(self.biomes.shape, dtype=np.uint16)
 
         self.population = []
 
-    def generate_world(self, circle=True):
-        from FerfunBiomeGenerator import FerfunBiomeGen
-        if circle:
-            self.biomes = FerfunBiomeGen.BiomeGeneratorCircle(self.size, Biome.lenght - 1, 2, 6)
-        else:
-            self.biomes = FerfunBiomeGen.BiomeGeneratorDiamond(self.size, Biome.lenght - 1, 3, 10)
+    def generate_world(self):
+        from FerfunBiomeGenerator import generate_biomes
+        self.biomes = generate_biomes(self.size, 6, 20, range(1, Biome.lenght))
 
 class Biome:
     names = ['empty', 'grassland', 'forest', 'jungle', 'savanna', 'desert', 'wetland', 'tundra', 'artic', 'reef', 'marine', 'ocean']
